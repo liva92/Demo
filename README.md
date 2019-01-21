@@ -1,7 +1,7 @@
 # 项目demos
 标签：JavaScript cssTransition
-### 1.snake-game-p5js
----
+## 1.snake-game-p5js
+
 这是利用 CSS 与 JS对经典游戏《贪吃蛇》 进行了简单的重制，感兴趣的朋友可以来感受一下。
 
 > 项目地址《[传送门][1]》
