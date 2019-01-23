@@ -1,5 +1,5 @@
-# 项目demos
-标签：JavaScript cssTransition
+﻿# 项目demos
+标签：JavaScript JavaScript库 Transition
 
 ## 1.snake-game-p5js
 
@@ -19,6 +19,18 @@
 这是基于 Three.js 制作的 3D 飞行演示。你可以在 3D 环境中利用鼠标移动飞机，体验飞机移动时的流畅动作，观察飞机的动态阴影以及色彩搭配。
 
 > 项目地址《[传送门][4]》
+
+## 4.Particles-JS
+
+ - 什么是Particles JS
+
+Particles JS是由Vincent Garreau创建的一款特定动画JavaScript库，用于创建点和线组成的，看起来像粒子的动画。它允许开发人员切换诸如粒子的密度，颜色，不透明度，形状和大小之类的东西。
+
+ - 项目重构
+
+本demo是对practice.js增加登陆框的简单重构.
+
+> 项目地址《传送门》
 
 以上就是本文的所有分享,谢谢阅读。
 
