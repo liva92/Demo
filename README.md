@@ -24,13 +24,17 @@
 
  - 什么是Particles JS
 
-Particles JS是由Vincent Garreau创建的一款特定动画JavaScript库，用于创建点和线组成的，看起来像粒子的动画。它允许开发人员切换诸如粒子的密度，颜色，不透明度，形状和大小之类的东西。
+Particles JS是由Vincent Garreau创建的一款特定动画JavaScript库，用于创建点和线组成的，看起来像粒子的动画。
+
+你可以在 3D 环境中利用鼠标移动粒子，体现点线变化时的流畅动作。
+![image][5]
+
 
  - 项目重构
 
-本demo是对practice.js增加登陆框的简单重构.
-
-> 项目地址《传送门》
+本demo是对practice.js增加登陆框的简单重构。
+登陆框是使用了css框架《[picturepan2/spectre][6]》完成的。
+> 项目地址《[传送门][7]》
 
 以上就是本文的所有分享,谢谢阅读。
 
@@ -39,3 +43,6 @@ Particles JS是由Vincent Garreau创建的一款特定动画JavaScript库，用�
   [2]: https://github.com/liva92/Demos/blob/master/svg-clip-path-hover-effect/images/image.png
   [3]: https://liva92.github.io/Demos/svg-clip-path-hover-effect/index.html
   [4]: https://liva92.github.io/Demos/tinypolyworld-threejs-experiements/index.html
+  [5]: https://github.com/liva92/Demos/blob/master/particles-js/images/image.png
+  [6]: https://github.com/picturepan2/spectre
+  [7]: https://liva92.github.io/Demos/particles-js/index.html
