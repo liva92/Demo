@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Document</title>
+  <style>
+    #canvas{
+      border:1px solid #aaa;
+      display: block;
+      margin: 10px auto
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas">当前浏览器不支持canvas,请更换浏览器后再试！</canvas>
+
+  <script>
+    window.onload = function(){
+      let canvas = document.getElementById('canvas')
+      canvas.width = 500
+      canvas.height = 500
+      let context = canvas.getContext('2d')
+
+      context.font = 'bold 40px Arial'
+      //文字填充
+      context.fillStyle = '#058'
+      context.fillText('hello word!',40,50)
+      context.fillText('hello word!',40,100,100)
+
+      //文字边框绘制
+      context.lineWidth = 1
+      context.strokeStyle = '#058'
+      context.strokeText('hello word!',40,150)
+      context.strokeText('hello word!',40,200,100)
+      //文字渐变
+      let linearGrad = context.createLinearGradient(0,0,250,0)
+      linearGrad.addColorStop(0.0,'red')
+      linearGrad.addColorStop(0.5,'orange')
+      linearGrad.addColorStop(1.0,'purple')
+      context.fillStyle = linearGrad
+      context.fillText('hello word!',40,250)
+      //文字图像填充
+      let backgroundImage = new Image()
+      backgroundImage.src = './wall2.jpg'
+      backgroundImage.onload = function(){
+        let pattern = context.createPattern(backgroundImage,'repeat')
+        context.fillStyle = pattern
+        context.font = 'bold 50px Arial'
+        context.fillText('hello word!',40,300)
+        context.strokeText('hello word!',40,300)
+      }
+    }
+  </script>
+</body>
+</html>

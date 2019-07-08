@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Document</title>
+  <style>
+    #canvas{
+      border:1px solid #aaa;
+      display: block;
+      margin: 10px auto
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas">当前浏览器不支持canvas,请更换浏览器后再试！</canvas>
+
+  <script>
+    window.onload = function(){
+      let canvas = document.getElementById('canvas')
+      canvas.width = 500
+      canvas.height = 500
+      let context = canvas.getContext('2d')
+
+      let backcanvas = createBackgroundCanvas()
+
+      let pattern =context.createPattern(backcanvas,'repeat')
+      context.fillStyle = pattern
+      context.fillRect(0,0,800,800)
+    }
+    function createBackgroundCanvas(){
+      let backcanvas = document.createElement('canvas')
+      backcanvas.width = 100
+      backcanvas.height = 100
+      let backcanvasContext = backcanvas.getContext('2d')
+      drawStar(backcanvasContext,50,50,50,0)
+      return backcanvas
+    }
+
+    function drawStar(cxt, x, y, R, rot){
+      cxt.save()
+      cxt.translate(x,y)
+      cxt.rotate(rot/180 * Math.PI)
+
+      startPath(cxt ,R)
+      cxt.fillStyle = '#fb3'
+      cxt.strokeStyle = '#fd5'
+      cxt.lineWidth = 2
+      cxt.lineJoin = 'round'
+
+      cxt.fill()
+      cxt.stroke()
+      cxt.restore()
+
+    }
+    //标准五角星
+    function startPath(cxt ,R){
+      cxt.beginPath()
+      for(let i = 0 ;i < 5; i++){
+        cxt.lineTo(Math.cos((18 + i*72 )/180 * Math.PI)*R,
+                  -Math.sin((18 + i*72 )/180 * Math.PI)*R)
+        cxt.lineTo(Math.cos((54 + i*72 )/180 * Math.PI)*0.5*R,
+                  -Math.sin((54 + i*72 )/180 * Math.PI)*0.5*R)
+      }
+      cxt.closePath()
+  }
+  </script>
+</body>
+</html>

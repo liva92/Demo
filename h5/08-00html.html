@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Document</title>
+  <style>
+    #canvas-wrapper{
+      width: 1200px;
+      height: 600px;
+      position: relative;
+      margin: 0 auto
+    }
+    #canvas{
+      border:1px solid #aaa;
+    }
+    #controller {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      background-color: rgba(0,85,116, .7);
+      padding: 5px 20px 25px 20px;
+      border-radius: 10px 10px
+    }
+    #controller  h1{
+      color: white;
+      font-size: bold;
+      font-family: Microsoft Yahei
+    }
+    #controller #canvas-btn{
+      display: inline-block;
+      background-color: #8b0;
+      color: white;
+      font-size: 14px;
+      padding: 5px 15px;
+      text-decoration: none;
+      margin-top: 10px;
+      margin-right: 20px
+    }
+    #controller #canvas-btn:hover{
+      text-decoration: none;
+      background-color: #7a0
+    }
+    #controller .color-btn{
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 6px 6px;
+      font-size: 14px;
+      margin-top: 10px;
+      margin-right: 5px;
+      text-decoration: none;
+    }
+     #controller .color-btn:hover{
+      text-decoration: none;
+     }
+    #controller #white-color-btn{
+      background-color: white
+    }
+    #controller #black-color-btn{
+      background-color: black
+    }
+  </style>
+</head>
+<body>
+  <div class="canvas-wrapper">
+  <canvas id="canvas">当前浏览器不支持canvas,请更换浏览器后再试！</canvas>
+  <!-- 在canvas使用其他html元素 -->
+    <div id="controller">
+      <h1>canvas绘图之旅</h1>
+      <a href="#" id="canvas-btn">停止运动</a>
+      <a href="#" class="color-btn" id="white-color-btn">&nbsp</a>
+      <a href="#" class="color-btn" id="black-color-btn">&nbsp</a>
+    </div>
+  </div>
+
+  <script>
+    let WINDOW_WIDTH = document.documentElement.clientWidth
+    let WINDOW_HEIGHT = document.documentElement.clientHeight
+    let RADIUS
+    let aball = {}
+    let balls = []
+    let isMoving = true
+    let themeColor = 'white'
+    window.onload = function(){
+      let canvas = document.getElementById('canvas')
+      canvas.width = 1200
+      canvas.height = 600
+      let context = canvas.getContext('2d')
+      //绘制100个随机颜色的小球
+      for (let i = 0; i < 100; i++){
+        let r = Math.floor(Math.random()*255)
+        let g = Math.floor(Math.random()*255)
+        let b = Math.floor(Math.random()*255)
+        RADIUS = Math.random()*20 +20;
+        aball = {
+          color : 'rgb(' + r +',' + g +',' + b + ')',
+          RADIUS:RADIUS,
+               x:Math.random()*(canvas.width-2*RADIUS) + RADIUS,
+               y:Math.random()*(canvas.height-2*RADIUS) + RADIUS,
+              vx:(Math.random()*5 + 5) * Math.pow(-1,Math.floor(Math.random()*100)),
+              vy:(Math.random()*5 + 5) * Math.pow(-1,Math.floor(Math.random()*100))
+        }
+        balls[i] = aball
+      }
+
+      setInterval(() =>{
+        draw( context )
+        if(isMoving){
+          update(canvas.width,canvas.height)
+        }
+    },50)
+
+      document.getElementById('white-color-btn').onclick =function(event){
+        themeColor = 'white'
+        return false
+      }
+
+      document.getElementById('black-color-btn').onclick =function(event){
+        themeColor = 'black'
+        return false
+      }
+
+      document.getElementById('canvas-btn').onclick = function(event){
+        if(isMoving){
+          isMoving = false;
+          this.text = '开始运动'
+        }else{
+          isMoving = true
+          this.text = '停止运动'
+        }
+        return false
+      }
+    }
+    //canvas绘制
+    function draw(cxt){
+      let canvas =cxt.canvas
+      cxt.clearRect(0,0,canvas.width,canvas.height)
+      if (themeColor === 'black'){
+        cxt.fillStyle = 'black'
+        cxt.fillRect(0,0,canvas.width,canvas.height)
+      }
+      for (let i = 0,len = balls.length; i < len; i++){
+        //设置小球重叠状态
+        cxt.globalCompositeOperation = 'lighter'
+        cxt.fillStyle = balls[i].color
+        cxt.beginPath()
+        cxt.arc(balls[i].x,balls[i].y,balls[i].RADIUS,0,Math.PI*2)
+        cxt.closePath()
+        cxt.fill()
+      }
+    }
+    //小球状态更新
+    function update(canvasWidth, canvasHeight){
+      for (let i = 0,len = balls.length; i< len; i++){
+          balls[i].x += balls[i].vx
+          balls[i].y += balls[i].vy
+
+               //x轴碰撞检测
+          if(balls[i].x - balls[i].RADIUS <= 0){
+            balls[i].vx = -balls[i].vx
+            balls[i].x = balls[i].RADIUS
+          }
+
+          if(balls[i].x + balls[i].RADIUS >=canvasWidth){
+            balls[i].vx = -balls[i].vx
+            balls[i].x = canvasWidth - balls[i].RADIUS
+          }
+                       //y轴碰撞检测
+          if(balls[i].y - balls[i].RADIUS <= 0){
+            balls[i].vy = -balls[i].vy
+            balls[i].y = balls[i].RADIUS
+          }
+
+          if(balls[i].y + balls[i].RADIUS >=canvasHeight){
+            balls[i].vy = -balls[i].vy
+            balls[i].y = canvasHeight - balls[i].RADIUS
+        }
+      }
+    }
+  </script>
+</body>
+</html>

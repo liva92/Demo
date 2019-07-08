@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Document</title>
+
+</head>
+<style>
+  div{
+    width: 800px;
+    margin: 0 auto;
+  }
+  #canvas{
+    border: 1px solid #aaa;
+  }
+</style>
+<body>
+<div>
+  <canvas id="canvas">当前浏览器不支持canvas,请更换浏览器后再试！</canvas>
+
+</div>
+
+
+
+  <script>
+    window.onload = function(){
+      let canvas = document.getElementById('canvas')
+      canvas.width = 800
+      canvas.height = 800
+      let context = canvas.getContext('2d')
+      drawRect1(context, 100, 100, 400, 400, 5, "#058",'red')
+      drawRect2(context, 200, 200, 400, 400, 5, "#058",'rgba(0,256,0,.8)')
+
+      function drawRect1 (cxt, x, y, width, height, borderWidth,borderColor, fillColor){
+        cxt.beginPath()
+        //路径规划
+        cxt.rect(x,y,width,height)
+        cxt.closePath()
+
+        cxt.lineWidth = borderWidth
+        cxt.fillStyle = fillColor
+        cxt.strokeStyle = borderColor
+        //先填充后画边框
+        cxt.fill()
+        cxt.stroke()
+      }
+      function drawRect2 (cxt, x, y, width, height, borderWidth,borderColor, fillColor){
+        cxt.lineWidth = borderWidth
+        cxt.fillStyle = fillColor
+        cxt.strokeStyle = borderColor
+        //不用规划路径
+        cxt.fillRect(x, y, width, height)
+        cxt.strokeRect(x, y, width, height)
+      }
+    }
+  </script>
+</body>
+</html>

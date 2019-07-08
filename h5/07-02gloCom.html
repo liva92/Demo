@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Document</title>
+  <style>
+    #canvas{
+      border:1px solid #aaa;
+      display: block;
+      margin: 10px auto
+    }
+    #btn{
+      width: 1200px;margin: 10px auto;clear: both;
+    }
+    #btn a{
+      font-size: 16px;display: block;float: left;margin-right: 14px
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas">当前浏览器不支持canvas,请更换浏览器后再试！</canvas>
+  <div id="btn">
+    <a href="#">source-over</a>
+    <a href="#">source-atop</a>
+    <a href="#">source-in</a>
+    <a href="#">source-out</a>
+    <a href="#">destination-over</a>
+    <a href="#">destination-aop</a>
+    <a href="#">destination-in</a>
+    <a href="#">destination-out</a>
+    <a href="#">lighter</a>
+    <a href="#">copy</a>
+    <a href="#">xor</a>
+  </div>
+  <script>
+    window.onload = function(){
+      draw('source-over')
+      let btn = document.getElementById('btn').getElementsByTagName('a')
+      for(let i = 0 ,len = btn.length; i < len; i++){
+        btn[i].onclick = function(){
+          draw(this.text)
+          return false
+        }
+      }
+    }
+
+    function draw(compositeStyle){
+      let canvas = document.getElementById('canvas')
+      canvas.width = 1200
+      canvas.height = 600
+      let context = canvas.getContext('2d')
+      context.clearRect(0,0,canvas.width,canvas.height)
+
+      //draw title
+      context.font = 'bold 20px Arial'
+      context.textAlign = 'center'
+      context.textBaseline = 'middle'
+      context.fillStyle = '#058'
+      context.fillText('globalCompositeOperation=' +compositeStyle,canvas.width/2,60)
+
+      //draw Rect
+      context.fillStyle = 'blue'
+      context.fillRect(300,150,400,400)
+
+      //draw a triangle
+      context.globalCompositeOperation = compositeStyle
+      context.fillStyle = 'red'
+      context.beginPath()
+      context.moveTo(600,250)
+      context.lineTo(800,650)
+      context.lineTo(400,650)
+      context.closePath()
+      context.fill()
+
+      //draw triangle
+    }
+  </script>
+</body>
+</html>

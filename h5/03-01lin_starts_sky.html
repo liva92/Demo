@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Document</title>
+  <style>
+    #canvas{
+      border:1px solid #aaa;
+      display: block;
+      margin: 10px auto
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas">当前浏览器不支持canvas,请更换浏览器后再试！</canvas>
+
+  <script>
+    window.onload = function(){
+      let canvas = document.getElementById('canvas')
+      canvas.width = 1200
+      canvas.height = 500
+      let context = canvas.getContext('2d')
+      //绘制黑色背景
+      let skyStyle = context.createLinearGradient(0,0,0,canvas.height)
+      skyStyle.addColorStop(0.0,'#000')
+      skyStyle.addColorStop(1.0,'#035')
+      context.fillStyle = skyStyle
+      context.fillRect(0,0,canvas.width,canvas.height)
+
+      //绘制星星
+      for(let i = 0; i < 200; i++){
+      //半径为10-20的范围
+      let R = Math.random()*5 + 5
+      let x = Math.random()*canvas.width
+      let y = Math.random()*canvas.height*0.65
+      let a =Math.random()*360
+      drawStar(context,x,y,R,a)
+
+      }
+    }
+    //对五角星变形
+    function drawStar(cxt, x, y, R, rot){
+      cxt.save()
+      /*
+      绘制出在（x,y）,转rot度的五角星
+      先变换，再调用绘制路径
+        setTransform(a,b,c,d,e,f)
+        a,d为水平垂直缩放
+        b,c为水平垂直倾斜
+        e,f为水平垂直位移
+
+      */
+
+      cxt.translate(x,y)
+      cxt.rotate(rot/180 * Math.PI)
+
+      startPath(cxt ,R)
+      cxt.fillStyle = '#fb3'
+      cxt.strokeStyle = '#fd5'
+      cxt.lineWidth = 2
+      cxt.lineJoin = 'round'
+
+      cxt.fill()
+      cxt.stroke()
+      cxt.restore()
+
+    }
+    //标准五角星
+    function startPath(cxt ,R){
+      cxt.beginPath()
+      for(let i = 0 ;i < 5; i++){
+        cxt.lineTo(Math.cos((18 + i*72 )/180 * Math.PI)*R,
+                  -Math.sin((18 + i*72 )/180 * Math.PI)*R)
+        cxt.lineTo(Math.cos((54 + i*72 )/180 * Math.PI)*0.5*R,
+                  -Math.sin((54 + i*72 )/180 * Math.PI)*0.5*R)
+      }
+      cxt.closePath()
+  }
+
+  </script>
+</body>
+</html>

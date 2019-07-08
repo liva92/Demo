@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Document</title>
+  <style>
+    #canvas{
+      border:1px solid #aaa;
+      display: block;
+      margin: 10px auto
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas">当前浏览器不支持canvas,请更换浏览器后再试！</canvas>
+
+  <script>
+    window.onload = function(){
+      let canvas = document.getElementById('canvas')
+      canvas.width = 500
+      canvas.height = 500
+      let context = canvas.getContext('2d')
+
+      context.fillStyle = '#058'
+      //设置阴影属性即可直接绘制
+      context.shadowColor = 'gray'
+      context.shadowOffsetX = 20
+      context.shadowOffsetY = 20
+      context.shadowBlur = 5
+
+      context.fillRect(50,50,150,150)
+    }
+  </script>
+</body>
+</html>

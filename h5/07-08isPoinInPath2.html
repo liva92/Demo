@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Document</title>
+  <style>
+    #canvas{
+      border:1px solid #aaa;
+      display: block;
+      margin: 10px auto
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas">当前浏览器不支持canvas,请更换浏览器后再试！</canvas>
+  <script>
+    let balls =[]
+    let canvas = document.getElementById('canvas')
+    let context = canvas.getContext('2d')
+
+    window.onload = function(){
+      canvas.width = 500
+      canvas.height = 500
+      context.fillStyle = '#058'
+     //生成10个随机小球
+      for (let i = 0; i < 10; i++){
+        let aball = {
+          x:Math.random()*canvas.width,
+          y:Math.random()*canvas.height,
+          r:Math.random()*50 + 20
+        }
+        balls[i] = aball
+        draw(balls[i].x,balls[i].y)
+      }
+
+       canvas.addEventListener('mousemove',detect)
+    }
+
+    function draw(x, y){
+
+      context.clearRect(0,0,canvas.width,canvas.height)
+
+      for (let i = 0,len = balls.lenght; i < len; i++){
+        context.beginPath()
+        context.arc(balls[i].x,balls[i].y,balls[i].r,0,Math.PI*2)
+
+        if( context.isPointInPath(x ,y)){
+          context.fillStyle = 'red'
+        }else{
+          context.fillStyle = '#058'
+        }
+
+        context.fill()
+      }
+   }
+   //检测鼠标移动，判断鼠标是否停留在路径内
+    function detect(e){
+       e = e || window.event
+      //点在canvas的水平x距离
+      let x = e.clientX - canvas.getBoundingClientRect().left
+      let y = e.clientY - canvas.getBoundingClientRect().top
+      draw(x, y)
+    }
+  </script>
+</body>
+</html>

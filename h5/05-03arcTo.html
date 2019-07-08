@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Document</title>
+  <style>
+    #canvas{
+      border:1px solid #aaa;
+      display: block;
+      margin: 10px auto
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas">当前浏览器不支持canvas,请更换浏览器后再试！</canvas>
+
+  <script>
+    window.onload = function(){
+      let canvas = document.getElementById('canvas')
+      canvas.width = 800
+      canvas.height = 800
+      let context = canvas.getContext('2d')
+      arcToTest(context,150,100,600,100,650,600,300)
+
+    }
+    //arcToTest(起点坐标，参考点坐标，终点坐标，半径)
+    function arcToTest(cxt,x0,y0,x1,y1,x2,y2,r){
+      cxt.beginPath()
+      cxt.moveTo(x0,y0)
+      cxt.arcTo(x1,y1,x2,y2,r)
+      cxt.lineWidth = 6
+      cxt.strokeStyle = 'red'
+      cxt.stroke()
+
+      //baseline
+      cxt.beginPath()
+      cxt.moveTo(x0,y0)
+      cxt.lineTo(x1,y1)
+      cxt.lineTo(x2,y2)
+      cxt.lineWidth = 2
+      cxt.strokeStyle = 'gray'
+      cxt.stroke()
+    }
+  </script>
+</body>
+</html>

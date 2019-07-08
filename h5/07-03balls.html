@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Document</title>
+  <style>
+    #canvas{
+      border:1px solid #aaa;
+      display: block;
+      margin: 10px auto
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas">当前浏览器不支持canvas,请更换浏览器后再试！</canvas>
+
+  <script>
+    let WINDOW_WIDTH = document.documentElement.clientWidth
+    let WINDOW_HEIGHT = document.documentElement.clientHeight
+    let RADIUS
+    let aball = {}
+    let balls = []
+    window.onload = function(){
+      let canvas = document.getElementById('canvas')
+      canvas.width = 1200
+      canvas.height = 600
+      let context = canvas.getContext('2d')
+      //绘制100个随机颜色的小球
+      for (let i = 0; i < 100; i++){
+        let r = Math.floor(Math.random()*255)
+        let g = Math.floor(Math.random()*255)
+        let b = Math.floor(Math.random()*255)
+        RADIUS = Math.random()*20 +20;
+        aball = {
+          color : 'rgb(' + r +',' + g +',' + b + ')',
+          RADIUS:RADIUS,
+               x:Math.random()*(canvas.width-2*RADIUS) + RADIUS,
+               y:Math.random()*(canvas.height-2*RADIUS) + RADIUS,
+              vx:(Math.random()*5 + 5) * Math.pow(-1,Math.floor(Math.random()*100)),
+              vy:(Math.random()*5 + 5) * Math.pow(-1,Math.floor(Math.random()*100))
+        }
+        balls[i] = aball
+      }
+
+      setInterval(() =>{
+        draw( context )
+        update(canvas.width,canvas.height)
+    },50)
+
+    }
+    //canvas绘制
+    function draw(cxt){
+      let canvas =cxt.canvas
+      cxt.clearRect(0,0,canvas.width,canvas.height)
+      for (let i = 0,len = balls.length; i < len; i++){
+        //设置小球重叠状态
+        cxt.globalCompositeOperation = 'lighter'
+        cxt.fillStyle = balls[i].color
+        cxt.beginPath()
+        cxt.arc(balls[i].x,balls[i].y,balls[i].RADIUS,0,Math.PI*2)
+        cxt.closePath()
+        cxt.fill()
+      }
+    }
+    //小球状态更新
+    function update(canvasWidth, canvasHeight){
+      for (let i = 0,len = balls.length; i< len; i++){
+          balls[i].x += balls[i].vx
+          balls[i].y += balls[i].vy
+
+               //x轴碰撞检测
+          if(balls[i].x - balls[i].RADIUS <= 0){
+            balls[i].vx = -balls[i].vx
+            balls[i].x = balls[i].RADIUS
+          }
+
+          if(balls[i].x + balls[i].RADIUS >=canvasWidth){
+            balls[i].vx = -balls[i].vx
+            balls[i].x = canvasWidth - balls[i].RADIUS
+          }
+                       //y轴碰撞检测
+          if(balls[i].y - balls[i].RADIUS <= 0){
+            balls[i].vy = -balls[i].vy
+            balls[i].y = balls[i].RADIUS
+          }
+
+          if(balls[i].y + balls[i].RADIUS >=canvasHeight){
+            balls[i].vy = -balls[i].vy
+            balls[i].y = canvasHeight - balls[i].RADIUS
+        }
+      }
+    }
+  </script>
+</body>
+</html>

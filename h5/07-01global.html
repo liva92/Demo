@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Document</title>
+  <style>
+    #canvas{
+      border:1px solid #aaa;
+      display: block;
+      margin: 10px auto
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas">当前浏览器不支持canvas,请更换浏览器后再试！</canvas>
+
+  <script>
+    window.onload = function(){
+      let canvas = document.getElementById('canvas')
+      canvas.width = 500
+      canvas.height = 500
+      let context = canvas.getContext('2d')
+      //设置透明度
+      context.globalAlpha = 0.7
+      for (let i = 0; i < 100; i++){
+        let r = Math.floor(Math.random()*255)
+        let g = Math.floor(Math.random()*255)
+        let b = Math.floor(Math.random()*255)
+
+        context.fillStyle = 'rgb(' + r +',' + g +',' + b + ')'
+        context.beginPath()
+        context.arc(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*50,0,Math.PI*2)
+        context.fill()
+      }
+    }
+  </script>
+</body>
+</html>

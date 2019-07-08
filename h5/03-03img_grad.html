@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Document</title>
+  <style>
+    #canvas{
+      border:1px solid #aaa;
+      display: block;
+      margin: 10px auto
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas">当前浏览器不支持canvas,请更换浏览器后再试！</canvas>
+
+  <script>
+    window.onload = function(){
+      let canvas = document.getElementById('canvas')
+      canvas.width = 500
+      canvas.height = 500
+      let context = canvas.getContext('2d')
+      let backgroundImage = new Image()
+      backgroundImage.src = './dog.jpg'
+      backgroundImage.onload = function(){
+        var pattern = context.createPattern(backgroundImage,'repeat')
+        context.fillStyle = pattern
+        context.fillRect(0,0,500,500)
+      }
+    }
+  </script>
+</body>
+</html>
